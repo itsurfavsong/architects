@@ -10,7 +10,7 @@
 - **프론트엔드:** React, Vite, JavaScript (ES6+), HTML, CSS  
 - **API:** 공공데이터포털 (AirKorea) Open API  
 - **추가 기능:** PWA(Progressive Web App) 지원으로 모바일 환경 최적화  
-- **배포:** (예: Netlify / Vercel / GitHub Pages 사용 시 여기에 추가 가능)
+- **배포:** Vercel
 
 ---
 
@@ -69,3 +69,4 @@ npm run dev
 
 ## 💬 문의 및 피드백
 프로젝트 관련 문의나 제안사항이 있다면 Issue를 등록하거나, 각 참여자에게 연락해 주세요 😊
+
