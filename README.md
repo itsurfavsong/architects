@@ -1,7 +1,7 @@
 # 💨 Architects — 실시간 대기질 모니터링 웹 서비스
 
 ## ✨ 프로젝트 소개  
-**Architects**는 전국의 **실시간 미세먼지 및 대기질 정보를 시각적으로 제공**하는 반응형 웹 서비스입니다.  
+[**Architects**](https://architects-mocha.vercel.app)는 전국의 **실시간 미세먼지 및 대기질 정보를 시각적으로 제공**하는 반응형 웹 서비스입니다.  
 사용자는 현재 위치 또는 선택한 지역의 대기질을 한눈에 확인하고, 최근 추이를 그래프로 살펴보며, 농도 단계별 행동 요령도 함께 확인할 수 있습니다.  
 
 ---
@@ -64,9 +64,10 @@ npm run dev
 - 정연재 ([@jeongyeonjae0](https://github.com/jeongyeonjae0)):  메인 페이지 핵심 기능 (차트, 대기질 정보 시각화) 구현 
 - 송보미 ([@itsurfavsong](https://github.com/itsurfavsong)): 미세먼지 정보 발령 현황 페이지 
 - 김상원 ([@akg9380](https://github.com/akg9380)): 서비스 소개 페이지
-
+([@akg9380](https://architects-mocha.vercel.app)
 ---
 
 ## 💬 문의 및 피드백
 프로젝트 관련 문의나 제안사항이 있다면 Issue를 등록하거나, 각 참여자에게 연락해 주세요 😊
+
 
