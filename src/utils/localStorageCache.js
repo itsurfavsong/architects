@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 
 const CACHE_CONFIG = {
-  prefix: 'alert_v2',
+  prefix: 'alert_v3',
   ttl: 7 * 24 * 60 * 60 * 1000, // 7일
 };
 

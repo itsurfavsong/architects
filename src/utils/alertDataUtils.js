@@ -44,11 +44,13 @@ export const fetchWithCache = async (url, config) => {
   const cached = getCache(year, pageNo);
   if (cached) {
     console.log(`📦 Cache hit: ${year}년 ${pageNo}페이지`);
-    console.log('📦 Cached data structure:', {
-      hasData: !!cached.data,
-      hasResponse: !!cached.data?.response,
-      hasBody: !!cached.data?.response?.body,
-    });
+    // 디버깅용 로그
+    if (cached.data) {
+      console.log('📦 Cached contents snippet:', {
+        keys: Object.keys(cached.data),
+        sample: JSON.stringify(cached.data).slice(0, 100)
+      });
+    }
     return cached;
   }
 
