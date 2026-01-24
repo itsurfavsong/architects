@@ -1,12 +1,16 @@
+/* =============================================================================
+   AlertStatus Main Styles
+   ============================================================================= */
+
 /* -----------------1. 헤더 영역----------------- */
 .title-area {
   margin-top: 85px;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   padding: 0 30px;
 }
 
-.main-sub-head-title { 
-  width: 230px; 
+.main-sub-head-title {
+  width: 230px;
   font-size: var(--fs-sub);
   font-weight: var(--fw-bold);
   text-align: left;
@@ -38,7 +42,7 @@
   min-width: 100px;
   text-align: center;
   font-weight: var(--fw-bold);
-  color: var(--clr-bk); 
+  color: var(--clr-bk);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -62,9 +66,9 @@
 
 .dropdown-menu {
   position: absolute;
-  top: 100%; 
-  left: -1px; 
-  right: -1px; 
+  top: 100%;
+  left: -1px;
+  right: -1px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -75,7 +79,7 @@
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   overflow: hidden;
-  min-width: 100%; 
+  min-width: 100%;
 }
 
 .dropdown-item {
@@ -85,7 +89,8 @@
   font-weight: normal;
 }
 
-.dropdown-item:hover, .dropdown-item.selected {
+.dropdown-item:hover,
+.dropdown-item.selected {
   background-color: var(--clr-gy);
   font-weight: var(--fw-bold);
 }
@@ -99,26 +104,26 @@
 .prompt-msg-box {
   padding: 30px;
   border: 1px dashed var(--clr-dg);
-  border-radius: 20px; 
+  border-radius: 20px;
   text-align: center;
-  background-color: var(--clr-wh); 
+  background-color: var(--clr-wh);
   margin: 120px 30px 40px 30px;
   max-width: 600px;
-  min-height: 200px; 
+  min-height: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
 }
 
 @media (min-width: 600px) {
   .prompt-msg-box {
-    margin: 100px auto; 
+    margin: 100px auto;
   }
 }
 
 .prompt-msg-txt {
-  color: var(--clr-bk); 
+  color: var(--clr-bk);
   line-height: 1.6;
   font-size: var(--fs-msg-body);
 }
@@ -130,17 +135,17 @@
 /* -----------------2-1. 콘텐츠 영역 (API issue)----------------- */
 .error-msg-box {
   margin: 120px 30px 40px 30px;
-  padding: 30px;    
+  padding: 30px;
   border: 1px solid var(--clr-r);
   border-radius: 20px;
   text-align: center;
   background-color: var(--clr-wh);
   max-width: 600px;
-  min-height: 200px; 
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 
 .error-msg-title {
@@ -171,7 +176,7 @@
 .retry-btn {
   display: inline-block;
   padding: 10px 30px;
-  background-color: var(--clr-r); 
+  background-color: var(--clr-r);
   color: var(--clr-wh);
   font-weight: var(--fw-bold);
   border: none;
@@ -182,19 +187,19 @@
 }
 
 .retry-btn:hover {
-  background-color: var(--clr-dr); 
+  background-color: var(--clr-dr);
 }
 
 /* -----------------2-2. 콘텐츠 영역 (loading message)----------------- */
 .loading-state-container {
   margin: 120px 30px 40px 30px;
   padding: 30px;
-  max-width: 600px; 
-  min-height: 200px; /* 이 값은 이제 Wrapper가 대부분 처리합니다. */
-  border-radius: 20px; 
+  max-width: 600px;
+  min-height: 200px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
 }
 
@@ -202,15 +207,20 @@
   width: 30px;
   height: 30px;
   margin: 0 auto;
-  border: 4px solid var(--clr-gy); 
+  border: 4px solid var(--clr-gy);
   border-top: 4px solid var(--clr-bl);
   border-radius: 20px;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-txt {
@@ -221,33 +231,33 @@
 
 /* -----------------2-3. 콘텐츠 영역 (if data is empty)----------------- */
 .empty-msg-box {
-  padding: 30px; 
-  border: 1px dashed var(--clr-dg); 
-  border-radius: 20px; 
+  padding: 30px;
+  border: 1px dashed var(--clr-dg);
+  border-radius: 20px;
   text-align: center;
-  background-color: var(--clr-wh); 
+  background-color: var(--clr-wh);
   margin: 120px 30px 40px 30px;
   max-width: 600px;
-  min-height: 200px; 
+  min-height: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
 }
 
 .empty-msg-txt {
-  color: var(--clr-bk); 
+  color: var(--clr-bk);
   line-height: 1.6;
-  font-size: var(--fs-msg-body); 
-  margin: 0; 
+  font-size: var(--fs-msg-body);
+  margin: 0;
 }
 
 .cards-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   width: 100%;
   gap: 20px;
-  padding: 15px 0; 
+  padding: 15px 0;
 }
 
 @media (max-width: 1300px) {
@@ -289,27 +299,28 @@
 .date-header::after {
   content: '';
   position: absolute;
-  bottom: -5px; 
+  bottom: -5px;
   left: 0;
-  width: 100%; 
+  width: 100%;
   height: 2px;
-  background-color: var(--clr-gy); 
+  background-color: var(--clr-gy);
 }
 
-@media (min-width: 660px) { 
+@media (min-width: 660px) {
+
   .prompt-msg-box,
   .loading-state-container,
   .empty-msg-box,
   .error-msg-box {
     margin-left: auto;
     margin-right: auto;
-   }
+  }
 }
 
 .pagination-area {
   text-align: center;
-  margin-top: 20px; 
-  padding-bottom: 50px; /* 하단 여백 확보 */
+  margin-top: 20px;
+  padding-bottom: 50px;
 }
 
 .pagination-area .loading-txt {
@@ -320,8 +331,158 @@
 
 .end-msg {
   color: var(--clr-bk);
-  font-size: 20px; 
+  font-size: 20px;
   padding: 10px;
   text-align: center;
-  margin-bottom: 0; 
+  margin-bottom: 0;
+}
+
+/* =============================================================================
+   AlertStatusCards Styles
+   ============================================================================= */
+
+.alert-status-card {
+  height: 270px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--clr-wh);
+  border: 1px solid var(--clr-bk);
+  padding: 25px;
+  overflow: hidden;
+}
+
+/* 1. 카드 헤더 및 제목 영역 - 스크롤 외부 -------------------------------------------------------------------- */
+.alert-status-card-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 5px;
+  flex-shrink: 0;
+}
+
+.alert-status-card-issueGbn {
+  display: block;
+  width: 80px;
+  height: 40px;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 40px;
+  font-size: var(--fs-msg-body);
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+
+/* 대기 상태에 따른 다른 색깔의 뱃지 -------------------------------------------------------------------- */
+.badge-warning {
+  background-color: var(--clr-y);
+  color: var(--clr-bk);
+}
+
+.badge-danger {
+  background-color: var(--clr-r);
+  color: var(--clr-wh);
+}
+
+.badge-default {
+  background-color: var(--clr-dg);
+  color: var(--clr-wh);
+}
+
+.alert-status-card-title-area {
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--clr-gy);
+  flex-shrink: 0;
+}
+
+.alert-status-card-districtName {
+  color: var(--clr-bk);
+  font-size: var(--fs-cnt-title);
+  font-weight: var(--fw-bold);
+  text-align: left;
+  margin: 0;
+}
+
+/* 1-1. 스크롤 영역 -------------------------------------------------------------------- */
+.alert-status-card-scroll-contents {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  line-height: 1.5;
+  padding-top: 20px;
+}
+
+/* =============================================================================
+   AlertDetailItem Styles
+   ============================================================================= */
+
+.alert-detail-container {
+  font-size: var(--fs-cnt-body);
+  color: var(--clr-bk);
+}
+
+.alert-detail-moveName {
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-cnt-body);
+  color: var(--clr-dg);
+  padding-bottom: 10px;
+  display: block;
+}
+
+.alert-detail-info {
+  padding-left: 15px;
+  padding-bottom: 10px;
+}
+
+.alert-detail-value {
+  font-weight: var(--fw-bold);
+}
+
+.alert-detail-time {
+  padding-left: 10px;
+  font-size: var(--fs-cnt-body);
+  color: var(--clr-dg);
+}
+
+/* =============================================================================
+   Pagination Styles
+   ============================================================================= */
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0 60px 0;
+}
+
+.pagination-button {
+  background-color: var(--clr-wh);
+  border: 1px solid var(--clr-gy);
+  color: var(--clr-dg);
+  padding: 8px 15px;
+  margin: 0 4px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+  font-size: 15px;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: var(--clr-gy);
+  color: var(--clr-bk);
+}
+
+.pagination-button.active {
+  background-color: var(--clr-db);
+  color: var(--clr-wh);
+  border-color: var(--clr-dg);
+  font-weight: var(--fw-bold);
+}
+
+.pagination-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }

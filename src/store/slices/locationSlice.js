@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getLocation } from "../thunks/locationThunk";
+import { getLocation } from "../thunks/locationThunk.js";
 const initialState = {
   selectedRegion: '서울',
   selectedDistrict: null,
@@ -21,16 +21,16 @@ const locationSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-    .addCase(getLocation.pending, (state) => {
-      state.status = 'loading';
-    })
-    .addCase(getLocation.fulfilled, (state, action) => {
-      state.status = 'succeeded';
-      state.nearbyStations = action.payload;
-    })
-    .addCase(getLocation.rejected, (state) => {
-      state.status = 'failed';
-    })
+      .addCase(getLocation.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getLocation.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.nearbyStations = action.payload;
+      })
+      .addCase(getLocation.rejected, (state) => {
+        state.status = 'failed';
+      })
   }
 });
 

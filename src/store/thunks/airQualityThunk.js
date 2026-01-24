@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosConfig } from "../../configs/axioConfigs";
+import { axiosConfig } from "../../configs/axioConfigs.js";
 import axios from "axios";
 
 export const getAirQuality = createAsyncThunk(
@@ -40,18 +40,18 @@ export const getAirQuality = createAsyncThunk(
       const recentItems = items.slice(-5); // 뒤에서 5개 추출 
 
       // 데이터가 최신순(현재 -> 과거)이라면 순서를 뒤집기 
-      const orderedItems = recentItems; 
+      const orderedItems = recentItems;
 
       // Chart.js 형식에 맞게 데이터 가공 
       const processedData = {
         labels: orderedItems.map(item => {
-         const time = item.dataTime.split(' ')[1];
-         return time;
-        }),  
+          const time = item.dataTime.split(' ')[1];
+          return time;
+        }),
         pm10: orderedItems.map(item => item.pm10Value),
         pm25: orderedItems.map(item => item.pm25Value),
       };
-      
+
       return processedData;
 
     } catch (error) {
