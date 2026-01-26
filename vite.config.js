@@ -12,6 +12,12 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/dataApi/, ''),
         secure: true,
       },
+      '/kakaoApi': {
+        target: 'https://dapi.kakao.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/kakaoApi/, ''),
+        secure: true,
+      },
     },
   },
   plugins: [react(),
