@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getLocation } from "../thunks/locationThunk.js";
+
 const initialState = {
   selectedRegion: '서울',
   selectedDistrict: null,
