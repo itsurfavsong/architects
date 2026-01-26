@@ -46,8 +46,6 @@ const alertStatusIndex = createAsyncThunk(
   async ({ filterMonths = 1 }, thunkAPI) => {
     console.log('🚀 Thunk 시작:', { filterMonths });
 
-    const { alertStatus } = thunkAPI.getState();
-
     const pageNo = 1; // 👈 항상 1페이지만 (여러 연도 데이터를 합치므로)
     const years = getYearRange(filterMonths); // [2025, 2026] 또는 [2026]
     console.log('📅 Years to fetch:', years);

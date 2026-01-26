@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { alertStatusIndex } from '../thunks/alertStatusThunk.js';
-import { processAlertData } from '../../utils/alertDataUtils.js';
 
 const initialState = {
   list: [],           // 전체 원본 데이터
