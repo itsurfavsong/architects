@@ -13,4 +13,3 @@ export const MONTH_OPTIONS = [
   { value: 2, label: '2개월' },
   { value: 3, label: '3개월' },
 ];
-

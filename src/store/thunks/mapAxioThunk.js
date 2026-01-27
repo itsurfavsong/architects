@@ -13,6 +13,7 @@ const getMapList = createAsyncThunk(
         ver: axiosConfig.VER,
         sidoName: '전국',
         numOfRows: 1000,
+        returnType: 'json',
       }
     }
 
