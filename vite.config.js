@@ -6,12 +6,6 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
   server: {
     proxy: {
-      '/dataApi': {
-        target: 'https://apis.data.go.kr/B552584',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/dataApi/, ''),
-        secure: true,
-      },
     },
   },
   plugins: [react(),
