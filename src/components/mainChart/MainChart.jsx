@@ -24,12 +24,12 @@ const FALLBACK_STATIONS = ['종로구', '중구', '강남구', '송파구', '영
 // 데이터가 유효하지 않은지 검사 (모두 '-'이거나 null인 경우)
 const isDataInvalid = (stationData) => {
     return !stationData || (
-        (stationData.pm10Value === 0 || stationData.pm10Value === null) ||
-        (stationData.pm25Value === 0 || stationData.pm25Value === null) ||
-        (stationData.o3Value === 0 || stationData.o3value === null) ||
-        (stationData.no2Value === 0 || stationData.no2Value === null) ||
-        (stationData.coValue === 0 || stationData.coValue === null) ||
-        (stationData.so2Value === 0 || stationData.so2Value === null) 
+        (stationData.pm10Value === '-' || stationData.pm10Value === null) ||
+        (stationData.pm25Value === '-' || stationData.pm25Value === null) ||
+        (stationData.o3Value === '-' || stationData.o3value === null) ||
+        (stationData.no2Value === '-' || stationData.no2Value === null) ||
+        (stationData.coValue === '-' || stationData.coValue === null) ||
+        (stationData.so2Value === '-' || stationData.so2Value === null) 
         
         // 여기에 다른 핵심 오염원 체크를 추가할 수 있습니다.
     );
@@ -219,6 +219,7 @@ function MainChart() {
     setSelectedDistrict(district);
     const stationData = mapList?.items?.find(item => item.stationName === district);
     if (stationData) {
+      console.log(stationData)
       setSelectedStationData(stationData);
       dispatch(getAirQuality({ stationName: district }));
     }

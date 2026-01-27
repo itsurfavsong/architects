@@ -46,7 +46,8 @@ function MainMap() {
     }
 
     const averrage = (region) => {
-      const regionMungi = region?.map(item => {if(item.pm10Value !== 0 ) { return item.pm10Value }}); // 미세먼지 값 0인것(장비점검)빼고 다 가져오기
+      let arrData = []
+      const regionMungi = region?.map(item => {if(item.pm10Value !== 0 ) { return arrData.push(item.pm10Value) }}); // 미세먼지 값 0인것(장비점검)빼고 다 가져오기
       const cnt = regionMungi?.length // 객체 갯수
       const mungiAverrage = regionMungi?.reduce((sum, current) => sum + current, 0); // 객체들의 합
       const value = mungiAverrage / cnt // 객체들의 평균
@@ -54,7 +55,8 @@ function MainMap() {
       return grade.label // 평균값의 등급 출력
     }
     const averrageVal = (region) => {
-      const regionMungi = region?.map(item => {if(item.pm10Value !== 0 ) { return item.pm10Value }}); // 미세먼지 값 0인것(장비점검)빼고 다 가져오기
+      let arrData = []
+      const regionMungi = region?.map(item => {if(item.pm10Value !== 0 ) { return arrData.push(item.pm10Value) }}); // 미세먼지 값 0인것(장비점검)빼고 다 가져오기
       const cnt = regionMungi?.length // 객체 갯수
       const mungiAverrage = regionMungi?.reduce((sum, current) => sum + current, 0); // 객체들의 합
       const value = mungiAverrage / cnt // 객체들의 평균
@@ -127,7 +129,6 @@ function MainMap() {
             }
         }
       });
-
       setPolygonList(polygonListTmp);
     };
   }
