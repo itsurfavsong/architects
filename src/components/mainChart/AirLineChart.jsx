@@ -64,14 +64,14 @@ function AirLineChart() {
     return <div style={{width: '14vw', height: '550px', textAlign: 'center', paddingTop: '250px', border: 'dashed 1px', borderRadius: '10px' }}>위치 정보를 허용해 주세요🙏</div>;
   }
 
-  const labels = airQuality.labels;
+  const labels = [...airQuality.labels].reverse();
 
   const pm10Data = { 
     labels, 
     datasets: [
       {
         label: "미세먼지",
-        data: airQuality.pm10,
+        data: [...airQuality.pm10].reverse(),
         pointBackgroundColor: "#66c6ff",
         borderColor: "rgba(102, 102, 102, 0.6)",
       },
@@ -83,7 +83,7 @@ function AirLineChart() {
     datasets: [
       {
         label: "초미세먼지",
-        data: airQuality.pm25,
+        data: [...airQuality.pm25].reverse(),
         backgroundColor: "#FF6384",
         borderColor: "rgba(102, 102, 102, 0.6)",
       },

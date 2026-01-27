@@ -56,18 +56,18 @@ function AirBarChart() {
   }
 
   const data = {
-    labels: airQuality.labels,
+    labels: [...airQuality.labels].reverse(),
     datasets: [
       {
         label: '미세먼지 (PM10)',
-        data: airQuality.pm10,
+        data: [...airQuality.pm10].reverse(),
         backgroundColor: '#66c6ff',
         borderColor: '#000',
         borderWidth: 1,
       },
       {
         label: '초미세먼지 (PM2.5)',
-        data: airQuality.pm25,
+        data: [...airQuality.pm25].reverse(),
         backgroundColor: '#FF6384',
         borderColor: '#000',
         borderWidth: 1,
