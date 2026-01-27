@@ -1,35 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosConfig } from "../../configs/axioConfigs"
 import axios from "axios";
+import proj4 from "proj4";
+
+// 좌표계 정의 (WGS84 -> TM)
+const wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+const tm = "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs";
 
 const getLocation = createAsyncThunk(
   'location/getLocation',
   async ({ lat, lon }) => {
-    // 1. GPS(WGS84) -> TM 좌표 변환
-    const query = new URLSearchParams({
-      x: lon,
-      y: lat,
-      input_coord: 'WGS84',
-      output_coord: 'TM',
-    }).toString();
-    const kakaoUrl = `${axiosConfig.KAKAO_URL}/v2/local/geo/transcoord.json?${query}`;
-
-    // axios 인터셉터나 설정을 피하기 위해 브라우저 기본 fetch 사용
-    const transResponse = await fetch(kakaoUrl, {
-      method: 'GET',
-      headers: {
-        'Authorization': `KakaoAK ${axiosConfig.KAKAO_KEY}`.trim(),
-      },
-    });
-
-    const transData = await transResponse.json();
-
-    if (transData.errorType) {
-      console.error('Kakao API Error:', transData);
-      throw new Error(`Kakao API: ${transData.message}`);
-    }
-
-    const { x: tmX, y: tmY } = transData.documents[0];
+    // 1. WGS84 -> TM 좌표 변환
+    const [tmX, tmY] = proj4(wgs84, tm, [lon, lat]);
 
     // 2. TM 좌표로 근처 측정소 조회
     const url = `${axiosConfig.BASE_URL}/MsrstnInfoInqireSvc/getNearbyMsrstnList`;

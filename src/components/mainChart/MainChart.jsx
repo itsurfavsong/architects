@@ -23,16 +23,16 @@ const FALLBACK_STATIONS = ['종로구', '중구', '강남구', '송파구', '영
 
 // 데이터가 유효하지 않은지 검사 (모두 '-'이거나 null인 경우)
 const isDataInvalid = (stationData) => {
-  return !stationData || (
-    (stationData.pm10Value === 0 || stationData.pm10Value === null) ||
-    (stationData.pm25Value === 0 || stationData.pm25Value === null) ||
-    (stationData.o3Value === 0 || stationData.o3value === null) ||
-    (stationData.no2Value === 0 || stationData.no2Value === null) ||
-    (stationData.coValue === 0 || stationData.coValue === null) ||
-    (stationData.so2Value === 0 || stationData.so2Value === null)
-
-    // 여기에 다른 핵심 오염원 체크를 추가할 수 있습니다.
-  );
+    return !stationData || (
+        (stationData.pm10Value === 0 || stationData.pm10Value === null) ||
+        (stationData.pm25Value === 0 || stationData.pm25Value === null) ||
+        (stationData.o3Value === 0 || stationData.o3value === null) ||
+        (stationData.no2Value === 0 || stationData.no2Value === null) ||
+        (stationData.coValue === 0 || stationData.coValue === null) ||
+        (stationData.so2Value === 0 || stationData.so2Value === null) 
+        
+        // 여기에 다른 핵심 오염원 체크를 추가할 수 있습니다.
+    );
 };
 
 function MainChart() {
@@ -118,10 +118,20 @@ function MainChart() {
 
   // 4. **[수정]** 위치 기반 측정소 데이터 적용 (위치 획득 성공 시에만)
   useEffect(() => {
-    // :triangular_flag_on_post: 위치 획득 성공(locationSuccess) 시에만 이 로직 실행
+    // 🚩 디버깅용 로그 추가
+    if (locationSuccess && nearbyFlg) {
+      console.log('Location success! nearbyStations:', nearbyStations);
+      console.log('mapList:', mapList);
+    }
+
+    // 🚩 위치 획득 성공(locationSuccess) 시에만 이 로직 실행
     if (locationSuccess && nearbyFlg && nearbyStations?.items?.length > 0 && mapList?.items?.length > 0) {
-      const closestStationName = nearbyStations.items[0].Station_name;
+      // API 응답 필드명이 stationName인지 Station_name인지 확인 필요 (사용자 예시는 stationName)
+      const closestStationName = nearbyStations.items[0].stationName || nearbyStations.items[0].Station_name;
+      console.log('Closest Station Name:', closestStationName);
+      
       const match = mapList?.items.find(item => item.stationName === closestStationName);
+      console.log('Matched Station:', match);
 
       if (match) {
         // 지역, 상세지역 상태 업데이트
@@ -141,34 +151,32 @@ function MainChart() {
   // 5. **[수정]** mapList 변경 시 stationData 동기화 및 대체 지역 유효성 검사
   useEffect(() => {
     if (mapList?.items && selectedRegion && selectedDistrict) {
-      const stationData = mapList.items.find(
-        (item) => item.sidoName === selectedRegion && item.stationName === selectedDistrict
-      );
+              const stationData = mapList.items.find(
+            (item) => item.sidoName === selectedRegion && item.stationName === selectedDistrict
+        );
+        
+        if (stationData) {
+            setSelectedStationData(stationData);
 
-      if (stationData) {
-        setSelectedStationData(stationData);
+            // 🚩 핵심 수정:
+            // 1. 위치 실패 상태(locationFailed)이고
+            // 2. 현재 선택된 지역이 FALLBACK_STATIONS 목록 안에 있는 경우에만 유효성 검사 실행
+            const isFallbackStation = FALLBACK_STATIONS.includes(selectedDistrict);
 
-        // 🚩 핵심 수정:
-        // 1. 위치 실패 상태(locationFailed)이고
-        // 2. 현재 선택된 지역이 FALLBACK_STATIONS 목록 안에 있는 경우에만 유효성 검사 실행
-        const isFallbackStation = FALLBACK_STATIONS.includes(selectedDistrict);
-
-        if (locationFailed && isFallbackStation) {
-          if (isDataInvalid(stationData)) {
-            // 데이터가 유효하지 않고, 시도할 다음 지역이 남아 있다면
-            if (currentStationIndex < FALLBACK_STATIONS.length - 1) {
-              // 다음 지역으로 인덱스 업데이트 -> Effect 3 트리거
-              setCurrentStationIndex(prevIndex => prevIndex + 1);
-            }
-          }
-        }
-        // 📌 else: 위치 성공 시 또는 수동 선택 시에는 이 블록이 실행되지 않음
-
+            if (locationFailed && isFallbackStation) {
+                if (isDataInvalid(stationData)) {
+                    // 데이터가 유효하지 않고, 시도할 다음 지역이 남아 있다면
+                    if (currentStationIndex < FALLBACK_STATIONS.length - 1) {
+                        // 다음 지역으로 인덱스 업데이트 -> Effect 3 트리거
+                        setCurrentStationIndex(prevIndex => prevIndex + 1); 
+                    }
+                }
+            } 
+            // 📌 else: 위치 성공 시 또는 수동 선택 시에는 이 블록이 실행되지 않음
       }
     }
     // currentStationIndex를 의존성 배열에서 제거하면 루프가 멈추므로 유지해야 합니다.
   }, [mapList, selectedRegion, selectedDistrict, locationFailed, currentStationIndex]);
-
 
   // 화면 크기 감지
   useEffect(() => {
