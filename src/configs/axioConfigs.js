@@ -1,6 +1,6 @@
 export const axiosConfig = {
   SERVICE_KEY: import.meta.env.VITE_SERVICE_KEY,
-  BASE_URL: '/dataApi',
+  BASE_URL: 'https://apis.data.go.kr/B552584',
   NUM_OF_ROWS: 100,
   YEAR: '2025',
   VER: '1.0',
