@@ -31,12 +31,11 @@ function AirQualityCard(props) {
   const { title, subtitle, value, unit } = props;
 
   const itemCode = itemCodeMapping[title];
-  
-  // 값이 숫자일 경우에만 등급을 계산, 아닐 경우 '정보없음' 처리
-  const levelLabel = (typeof value === 'number' && itemCode)
+
+  // 값이 들어있으면 등급을 계산, 아닐 경우 '정보없음' 처리
+  const levelLabel = (itemCode)
     ? getDustLevel(value, itemCode).label
     : '정보없음';
-
   const statusImage = statusImages[levelLabel] || caution;
 
   return (

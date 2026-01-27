@@ -53,8 +53,9 @@ const alertStatusIndex = createAsyncThunk(
     const url = `${axiosConfig.BASE_URL}/UlfptcaAlarmInqireSvc/getUlfptcaAlarmInfo`;
 
     try {
-      const promises = years.map(year =>
-        fetchWithCache(url, {
+      const responses = [];
+      for (const year of years) {
+        const response = await fetchWithCache(url, {
           params: {
             serviceKey: axiosConfig.SERVICE_KEY,
             returnType: 'json',
@@ -62,18 +63,13 @@ const alertStatusIndex = createAsyncThunk(
             pageNo,
             year,
           },
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache',
-            'Expires': '0',
-          },
           validateStatus: (status) => status >= 200 && status < 300,
-          timeout: 10000,
-        })
-      );
+          timeout: 20000,
+        });
+        responses.push(response);
+      }
 
-      const responses = await Promise.all(promises);
-      console.log('✅ All responses received');
+      console.log('✅ All responses received sequentially');
 
       const validResponses = responses.filter(validateResponse);
 

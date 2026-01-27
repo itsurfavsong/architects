@@ -24,12 +24,12 @@ const FALLBACK_STATIONS = ['종로구', '중구', '강남구', '송파구', '영
 // 데이터가 유효하지 않은지 검사 (모두 '-'이거나 null인 경우)
 const isDataInvalid = (stationData) => {
     return !stationData || (
-        (stationData.pm10Value === 0 || stationData.pm10Value === null) ||
-        (stationData.pm25Value === 0 || stationData.pm25Value === null) ||
-        (stationData.o3Value === 0 || stationData.o3value === null) ||
-        (stationData.no2Value === 0 || stationData.no2Value === null) ||
-        (stationData.coValue === 0 || stationData.coValue === null) ||
-        (stationData.so2Value === 0 || stationData.so2Value === null) 
+        (stationData.pm10Value === '-' || stationData.pm10Value === null) ||
+        (stationData.pm25Value === '-' || stationData.pm25Value === null) ||
+        (stationData.o3Value === '-' || stationData.o3value === null) ||
+        (stationData.no2Value === '-' || stationData.no2Value === null) ||
+        (stationData.coValue === '-' || stationData.coValue === null) ||
+        (stationData.so2Value === '-' || stationData.so2Value === null) 
         
         // 여기에 다른 핵심 오염원 체크를 추가할 수 있습니다.
     );
@@ -39,7 +39,7 @@ function MainChart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const moveGuide = () => { navigate('/guideLine'); };
-  
+
   // **[수정]** dayjs 변수를 state로 관리하여 갱신 가능하도록 변경
   const [todayDate, setTodayDate] = useState(dayjs().format('YY.MM.DD'));
   const [currentHour, setCurrentHour] = useState(dayjs().format('HH'));
@@ -103,7 +103,7 @@ function MainChart() {
     // 위치 획득에 실패한 경우에만 실행
     if (locationFailed && !locationSuccess) {
       const stationName = FALLBACK_STATIONS[currentStationIndex];
-      
+
       if (stationName) {
         dispatch(getAirQuality({ stationName: stationName }));
         // UI 상태 업데이트 (대체 지역 정보 표시)
@@ -118,10 +118,20 @@ function MainChart() {
 
   // 4. **[수정]** 위치 기반 측정소 데이터 적용 (위치 획득 성공 시에만)
   useEffect(() => {
-    // :triangular_flag_on_post: 위치 획득 성공(locationSuccess) 시에만 이 로직 실행
+    // 🚩 디버깅용 로그 추가
+    if (locationSuccess && nearbyFlg) {
+      console.log('Location success! nearbyStations:', nearbyStations);
+      console.log('mapList:', mapList);
+    }
+
+    // 🚩 위치 획득 성공(locationSuccess) 시에만 이 로직 실행
     if (locationSuccess && nearbyFlg && nearbyStations?.items?.length > 0 && mapList?.items?.length > 0) {
-      const closestStationName = nearbyStations.items[0].Station_name;
+      // API 응답 필드명이 stationName인지 Station_name인지 확인 필요 (사용자 예시는 stationName)
+      const closestStationName = nearbyStations.items[0].stationName || nearbyStations.items[0].Station_name;
+      console.log('Closest Station Name:', closestStationName);
+      
       const match = mapList?.items.find(item => item.stationName === closestStationName);
+      console.log('Matched Station:', match);
 
       if (match) {
         // 지역, 상세지역 상태 업데이트
@@ -139,9 +149,9 @@ function MainChart() {
   }, [nearbyStations, mapList, nearbyFlg, locationSuccess]);
 
   // 5. **[수정]** mapList 변경 시 stationData 동기화 및 대체 지역 유효성 검사
-useEffect(() => {
+  useEffect(() => {
     if (mapList?.items && selectedRegion && selectedDistrict) {
-        const stationData = mapList.items.find(
+              const stationData = mapList.items.find(
             (item) => item.sidoName === selectedRegion && item.stationName === selectedDistrict
         );
         
@@ -163,12 +173,10 @@ useEffect(() => {
                 }
             } 
             // 📌 else: 위치 성공 시 또는 수동 선택 시에는 이 블록이 실행되지 않음
-            
-        }
+      }
     }
     // currentStationIndex를 의존성 배열에서 제거하면 루프가 멈추므로 유지해야 합니다.
-}, [mapList, selectedRegion, selectedDistrict, locationFailed, currentStationIndex]);
-
+  }, [mapList, selectedRegion, selectedDistrict, locationFailed, currentStationIndex]);
 
   // 화면 크기 감지
   useEffect(() => {
@@ -186,7 +194,7 @@ useEffect(() => {
         const sortStations = selectedItems
           // .map(item => item.stationName)
           // .sort((a, b) => a.localeCompare(b)); // 가나다순
-          .sort((a,b) => a.stationName.localeCompare(b.stationName))
+          .sort((a, b) => a.stationName.localeCompare(b.stationName))
         const firstDistrict = sortStations[0].stationName;
         setSelectedDistrict(firstDistrict);
         dispatch(getAirQuality({ stationName: firstDistrict }));
@@ -202,15 +210,16 @@ useEffect(() => {
     setSelectedRegion(region);
     setSelectedDistrict(null); // 상세지역 초기화
     setSelectedStationData(null);
-    
+
     // 드롭다운 수동 선택 시, 위치 기반 플래그 초기화
-    setNearbyFlg(false); 
+    setNearbyFlg(false);
   };
 
   const handleDistrictSelect = (district) => {
     setSelectedDistrict(district);
     const stationData = mapList?.items?.find(item => item.stationName === district);
     if (stationData) {
+      console.log(stationData)
       setSelectedStationData(stationData);
       dispatch(getAirQuality({ stationName: district }));
     }
@@ -228,7 +237,7 @@ useEffect(() => {
   }) : [];
   const selectedItems = mapList?.items?.filter(val => val.sidoName === selectedRegion);
   const selectedStations = selectedItems?.map(item => item.stationName);
-  const sortStations = selectedStations?.sort((a, b) => a.localeCompare(b));
+  const sortStations = selectedStations?.sort((a, b) => a.localeCompare(b)) || [];
 
   // 대기질 카드 데이터
   const airQualityData = selectedStationData ? [
@@ -290,7 +299,7 @@ useEffect(() => {
                 variant="region"
                 isOpen={openDropdown === 'region'}
                 toggleDropdown={() => handleToggleDropdown('region')}
-                />
+              />
               <MainDropDown
                 title={selectedDistrict || "상세지역"}
                 options={sortStations}
@@ -298,31 +307,31 @@ useEffect(() => {
                 variant="district"
                 isOpen={openDropdown === 'district'}
                 toggleDropdown={() => handleToggleDropdown('district')}
-                />
+              />
             </div>
             <div className='card-container'>
               {airQualityData.map((data, index) => (
                 <AirQualityCard
-                key={index}
-                title={data.title}
-                subtitle={data.subtitle}
-                value={data.value}
-                unit={data.unit}
+                  key={index}
+                  title={data.title}
+                  subtitle={data.subtitle}
+                  value={data.value}
+                  unit={data.unit}
                 />
               ))}
             </div>
           </div>
 
-          {isDataInvalid(selectedStationData) && <div className='injection'><img src={caution}  alt="점검 중"/> : 측정소점검</div>}
+          {isDataInvalid(selectedStationData) && <div className='injection'><img src={caution} alt="점검 중" /> : 측정소점검</div>}
         </div>
 
         <div className='chart-padding'>
           {selectedStationData ? (
             isMobile ? <AirBarChart /> : <AirLineChart />
-          ) : 
+          ) :
             <div className="chart-placeholder">
               {/* 위치 획득 실패 및 데이터 부재 시 사용자 안내 문구 추가 */}
-              {locationFailed && <p style={{width: '14vw', height: '550px', textAlign: 'center', paddingTop: '250px', border: 'dashed 1px', borderRadius: '10px' }}>위치 정보를 가져올 수 없습니다. 서울 지역의 유효한 측정소 정보를 표시합니다.</p>}
+              {locationFailed && <p style={{ width: '14vw', height: '550px', textAlign: 'center', paddingTop: '250px', border: 'dashed 1px', borderRadius: '10px' }}>위치 정보를 가져올 수 없습니다. 서울 지역의 유효한 측정소 정보를 표시합니다.</p>}
             </div>
           }
         </div>

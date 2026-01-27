@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import './MainDropDown.css';
 
-function MainDropDown({ title, options, onOptionSelect, variant, isOpen, toggleDropdown }) {
+function MainDropDown({ title, options = [], onOptionSelect, variant, isOpen, toggleDropdown }) {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function MainDropDown({ title, options, onOptionSelect, variant, isOpen, toggleD
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, toggleDropdown]);
-  
+
   const handleOptionClick = (option) => {
     if (onOptionSelect) {
       onOptionSelect(option);
@@ -42,7 +42,7 @@ function MainDropDown({ title, options, onOptionSelect, variant, isOpen, toggleD
 
       {isOpen && (
         <div className="dropdown-content">
-          {options.map((option, index) => (
+          {options?.map((option, index) => (
             <button
               key={index}
               type="button"
